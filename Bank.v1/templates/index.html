@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Nova Bank - Online Banking Portal</title>
+  <link rel="icon" type="image/png" href="/static/favicon.png">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+  <link rel="stylesheet" href="/static/style.css?v=2026_biglogo">
+</head>
+<body>
+
+  <!-- DEDICATED EXECUTIVE ADMIN LOGIN MODAL (Accessed from top corner) -->
+  <div id="admin-login-modal" class="admin-modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="admin-modal-backdrop"></div>
+    <div class="admin-modal-card">
+      <button type="button" class="admin-modal-close" id="btn-close-admin-modal" title="Close (ESC)">✕</button>
+      
+      <div class="auth-header">
+        <div class="auth-icon-badge admin-badge">
+          <img src="/static/logo-darktheme.png" alt="Super Nova Bank" class="auth-logo-img">
+        </div>
+        <div>
+          <h3 style="color: #fef3c7;">Executive Admin Portal</h3>
+          <p class="subtitle" style="margin-bottom: 0; text-align: left; font-size: 0.85rem; color: #f59e0b;">Central Banking Operations • Restricted Access</p>
+        </div>
+      </div>
+
+      <!-- Admin Login Form -->
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label for="login-admin-id">
+            <span>Executive Admin ID</span>
+            <span class="label-hint">System Operator</span>
+          </label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">🛡️</span>
+            <input type="text" id="login-admin-id" placeholder="Enter admin ID" required autocomplete="username">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="login-admin-pass">
+            <span>Admin Security Password</span>
+            <span class="label-hint">Encrypted Key</span>
+          </label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">🔑</span>
+            <input type="password" id="login-admin-pass" placeholder="Enter admin password" required autocomplete="current-password">
+            <button type="button" class="btn-toggle-eye" onclick="togglePasswordVisibility('login-admin-pass', this)" title="Show/Hide Password">👁️</button>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-submit-auth btn-admin-submit">
+          <span class="btn-text">Sign In as Administrator</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOGIN TOP NAV BAR -->
+  <div id="login-top-bar" class="login-top-bar">
+    <div class="login-brand">
+      <div class="brand-crest-mini">
+        <img src="/static/logo-darktheme.png" alt="Super Nova Bank Logo" class="brand-crest-img">
+      </div>
+      <div>
+        <span class="brand-name-top">SUPER NOVA BANK</span>
+        <span class="brand-sub-top">YOUR TRUST. OUR PRIORITY.</span>
+      </div>
+    </div>
+
+    <div class="login-top-actions">
+      <div class="clock-display" id="live-clock">--:--:-- UTC</div>
+      <!-- Dedicated Admin Login in Top Corner of the Website -->
+      <button type="button" class="btn-top-admin-login" id="btn-top-admin-login" title="Access Central Executive Portal">
+        <span class="admin-top-icon">👨‍💼</span>
+        <span id="top-admin-label">Admin Login</span>
+        <span class="admin-pulse-dot"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- LOGIN VIEW (Centered Banking Portal) -->
+  <div id="login-view" class="container wide login-layout-centered">
+    <div class="login-split">
+      <!-- Centered Brand Header -->
+      <div class="login-hero">
+        <div class="hero-centered-brand">
+          <img src="/static/logo-darktheme.png" alt="Super Nova Bank Logo" class="hero-centered-logo">
+        </div>
+      </div>
+
+      <!-- Right Panel: Authentication Card (Customer Login Only) -->
+      <div class="login-auth-card">
+        <div class="auth-card-glow"></div>
+        <div class="auth-header">
+          <div class="auth-icon-badge">
+            <img src="/static/logo-darktheme.png" alt="Super Nova Bank" class="auth-logo-img">
+          </div>
+          <div>
+            <h3>Customer Banking Portal</h3>
+            <p class="subtitle" style="margin-bottom: 0; text-align: left; font-size: 0.85rem;">Super Nova Bank • Secure Client Gateway</p>
+          </div>
+        </div>
+
+        <!-- User Login Form (Only Form on Front) -->
+        <form id="user-login-form">
+          <div class="form-group">
+            <label for="login-account-no">
+              <span>Customer Account Number</span>
+              <span class="label-hint">Numeric ID</span>
+            </label>
+            <div class="input-icon-wrap">
+              <span class="input-icon">💳</span>
+              <input type="text" id="login-account-no" placeholder="e.g. 1000, 1001, 1002" required autocomplete="username">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="login-pin">
+              <span>4-Digit Security PIN</span>
+              <span class="label-hint">Confidential</span>
+            </label>
+            <div class="input-icon-wrap">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="login-pin" maxlength="4" placeholder="••••" required autocomplete="current-password">
+              <button type="button" class="btn-toggle-eye" onclick="togglePasswordVisibility('login-pin', this)" title="Show/Hide PIN">👁️</button>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-submit-auth">
+            <span class="btn-text">Sign In to Customer Account</span>
+            <span class="btn-arrow">→</span>
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div id="admin-view" class="container wide hidden">
+    <header>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <img src="/static/logo-icon.png" alt="Super Nova Bank Logo" class="dashboard-header-logo">
+        <div>
+          <h2 style="margin: 0;">Super Nova Bank - Executive Portal</h2>
+          <p class="subtitle" style="text-align: left; margin-bottom: 0; font-size: 0.85rem; margin-top: 0.25rem;">Central Banking & Account Operations • Your Trust. Our Priority.</p>
+        </div>
+      </div>
+      <button class="btn btn-secondary" onclick="logout()" style="width: auto;">Logout</button>
+    </header>
+    
+    <div class="nav-buttons">
+      <button class="btn" onclick="showAdminSection('admin-overview')">📊 Overview & Metrics</button>
+      <button class="btn btn-secondary" onclick="showAdminSection('admin-create')">➕ Create Account</button>
+      <button class="btn btn-secondary" onclick="showAdminSection('admin-manage')">👥 Manage Accounts</button>
+      <button class="btn btn-secondary" onclick="showAdminSection('admin-audit')">📜 Global Audit Ledger</button>
+    </div>
+
+    <!-- Admin Overview (Wide 4-Card KPI Grid) -->
+    <div id="admin-overview">
+      <div class="grid-3 mb-2">
+        <div class="stat-card">
+          <div>Total Customer Accounts</div>
+          <div class="value" id="stat-total-accounts">0</div>
+        </div>
+        <div class="stat-card">
+          <div>Total Bank Reserves</div>
+          <div class="value" id="stat-total-balance" style="color: #34d399;">₹0.00</div>
+        </div>
+        <div class="stat-card">
+          <div>Average Account Balance</div>
+          <div class="value" id="stat-avg-balance" style="color: #60a5fa;">₹0.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Create Account (Wide Form Grid) -->
+    <div id="admin-create" class="hidden">
+      <div class="card-inner">
+        <h3>➕ Open New Customer Account</h3>
+        <form id="create-account-form">
+          <div class="grid-3">
+            <div class="form-group">
+              <label>Customer Full Name</label>
+              <input type="text" id="create-name" placeholder="e.g. John Doe" required>
+            </div>
+            <div class="form-group">
+              <label>Initial 4-Digit PIN</label>
+              <input type="password" id="create-pin" maxlength="4" placeholder="••••" required>
+            </div>
+            <div class="form-group">
+              <label>Initial Deposit Amount (₹)</label>
+              <input type="number" id="create-amount" min="0" step="100" value="500" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success" style="max-width: 240px; margin-top: 0.5rem;">Create Account</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Admin Manage Accounts (Full-Width Responsive Table & Filter) -->
+    <div id="admin-manage" class="hidden">
+      <div class="card-inner" style="padding: 1.5rem;">
+        <div class="flex-between mb-1" style="flex-wrap: wrap; gap: 1rem;">
+          <h3>👥 Customer Account Directory</h3>
+          <div class="search-box">
+            <input type="text" id="search-accounts" placeholder="🔍 Search by name or account number..." oninput="filterAccounts()">
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Account No.</th>
+                <th>Customer Name</th>
+                <th>Available Balance</th>
+                <th>PIN Security</th>
+                <th style="text-align: right;">Manage</th>
+              </tr>
+            </thead>
+            <tbody id="accounts-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Global Audit Ledger -->
+    <div id="admin-audit" class="hidden">
+      <div class="card-inner" style="padding: 1.5rem;">
+        <div class="flex-between mb-1" style="flex-wrap: wrap; gap: 1rem;">
+          <h3>📜 Real-Time Transaction Audit Trail</h3>
+          <span class="badge badge-success">● Live Sync</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Txn Ref ID</th>
+                <th>Account No.</th>
+                <th>Type</th>
+                <th>Amount (₹)</th>
+                <th>Balance After</th>
+              </tr>
+            </thead>
+            <tbody id="admin-audit-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT ACCOUNT MODAL -->
+  <div id="edit-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3>✏️ Edit Account</h3>
+      <form id="edit-account-form">
+        <input type="hidden" id="edit-acc-no">
+        <div class="form-group">
+          <label>Customer Name</label>
+          <input type="text" id="edit-name" required>
+        </div>
+        <div class="form-group">
+          <label>Account Balance (₹)</label>
+          <input type="number" id="edit-balance" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>PIN Action</label>
+          <select id="edit-pin-action" onchange="toggleEditPinInput()">
+            <option value="Keep current PIN">Keep current PIN</option>
+            <option value="Set new 4-digit PIN directly">Set new PIN</option>
+          </select>
+        </div>
+        <div class="form-group hidden" id="edit-pin-group">
+          <label>New 4-Digit PIN</label>
+          <input type="password" id="edit-pin" maxlength="4">
+        </div>
+        <div class="grid-2 mt-1">
+          <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-success">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- USER DASHBOARD (Professional "My Bank" Enterprise Architecture) -->
+  <div id="user-view" class="container wide hidden">
+    <!-- Institutional Bank Header -->
+    <header>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <img src="/static/logo-icon.png" alt="Super Nova Bank Logo" class="dashboard-header-logo">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <h2 style="margin: 0;"><span id="user-greeting">Super Nova Bank</span></h2>
+            <span class="badge badge-success">● Account Active</span>
+          </div>
+          <p class="subtitle" style="text-align: left; margin-bottom: 0; font-size: 0.85rem; margin-top: 0.25rem;">
+            Premier Digital Banking • IFSC: <code style="color: #818cf8; font-family: 'JetBrains Mono', monospace;">SNBK0004921</code> • Central Branch
+          </p>
+        </div>
+      </div>
+      <button class="btn btn-secondary" onclick="logout()" style="width: auto;">Logout</button>
+    </header>
+    
+    <!-- Top Executive Showcase: Virtual Platinum Debit Card + Institutional Specs -->
+    <div class="grid-2 mb-2" style="align-items: stretch;">
+      <!-- Virtual Platinum Card -->
+      <div class="virtual-card-wrapper" style="max-width: 100%;">
+        <div class="virtual-card">
+          <img src="/static/logo-icon.png" alt="" class="card-watermark">
+          <div class="card-top">
+            <div class="card-brand-group">
+              <img src="/static/logo-icon.png" alt="Super Nova Bank Logo" class="card-logo-icon">
+              <span class="card-bank-name">SUPER NOVA BANK</span>
+            </div>
+            <span class="card-type-pill">PLATINUM DEBIT</span>
+          </div>
+          <div class="card-chip-row">
+            <div class="emv-chip"></div>
+            <span class="contactless-icon">📡</span>
+          </div>
+          <div class="card-number" id="card-acc-display">4532 •••• •••• 1001</div>
+          <div class="card-bottom">
+            <div>
+              <div class="card-holder-label">Cardholder Name</div>
+              <div class="card-holder-name" id="card-holder-display">CUSTOMER</div>
+            </div>
+            <div class="card-expiry">
+              <div class="card-holder-label">Expires</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #f8fafc; font-weight: 600;">12/30</div>
+            </div>
+            <div class="mastercard-circles">
+              <div class="mc-circle-red"></div>
+              <div class="mc-circle-yellow"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Summary & Quick Stats Card -->
+      <div class="stat-card" style="text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Total Available Balance</span>
+            <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">FDIC Insured</span>
+          </div>
+          <div class="value" id="user-balance" style="color: #34d399; font-size: 2.75rem; margin: 0.25rem 0 1rem 0;">₹0.00</div>
+        </div>
+
+        <div class="account-spec-grid">
+          <div class="spec-item">
+            <span class="spec-label">Account Number</span>
+            <span class="spec-value" id="user-acc-no-display" style="color: #60a5fa;">#1001</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Account Tier</span>
+            <span class="spec-value" style="color: #f8fafc;">Premier Savings</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Daily Transfer Limit</span>
+            <span class="spec-value" style="color: #f8fafc;">₹1,00,000.00</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Security Protocol</span>
+            <span class="spec-value" style="color: #a78bfa;">256-Bit TLS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-buttons">
+      <button class="btn" onclick="showUserSection('user-overview')">💳 Overview & Quick Actions</button>
+      <button class="btn btn-secondary" onclick="showUserSection('user-deposit')">📥 Deposit Money</button>
+      <button class="btn btn-secondary" onclick="showUserSection('user-withdraw')">📤 Withdraw Money</button>
+      <button class="btn btn-secondary" onclick="showUserSection('user-statement')">📜 Passbook & Statement</button>
+      <button class="btn btn-secondary" onclick="showUserSection('user-pin')">🔐 Security PIN</button>
+    </div>
+
+    <!-- Overview Section (Quick Shortcuts & Recent Activity) -->
+    <div id="user-overview">
+      <div class="grid-2 mb-2">
+        <div class="card-inner" style="margin-top: 0; display: flex; flex-direction: column; justify-content: center; gap: 1rem;">
+          <h4 style="color: var(--text-main); font-size: 1.1rem;">⚡ Quick Financial Operations</h4>
+          <p style="color: var(--text-muted); font-size: 0.85rem;">Instantly deposit or withdraw funds with zero processing delay.</p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn btn-success" style="width: auto; padding: 0.65rem 1.25rem;" onclick="showUserSection('user-deposit')">📥 Deposit Funds</button>
+            <button class="btn btn-warning" style="width: auto; padding: 0.65rem 1.25rem;" onclick="showUserSection('user-withdraw')">📤 Fast Cash ATM</button>
+            <button class="btn btn-secondary" style="width: auto; padding: 0.65rem 1.25rem;" onclick="showUserSection('user-statement')">📜 View Statement</button>
+          </div>
+        </div>
+
+        <div class="card-inner" style="margin-top: 0;">
+          <h4 style="color: var(--text-main); font-size: 1.1rem; margin-bottom: 0.75rem;">🛡️ Security Recommendations</h4>
+          <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
+            Never share your 4-digit PIN with anyone. Super Nova Bank employees will never request your PIN or credentials via phone or email.
+          </p>
+          <button class="btn btn-secondary" style="width: auto; font-size: 0.85rem;" onclick="showUserSection('user-pin')">Change 4-Digit PIN</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Passbook / Statement Section (Real-Time Transaction Ledger) -->
+    <div id="user-statement" class="hidden">
+      <div class="card-inner" style="padding: 1.5rem; margin-top: 0;">
+        <div class="flex-between mb-1" style="flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3>📜 Official Account Passbook & Transaction Statement</h3>
+            <p class="subtitle" style="margin-bottom: 0; text-align: left; font-size: 0.825rem;">Real-time ledger entries synced with MySQL database</p>
+          </div>
+          <button class="btn btn-secondary" style="width: auto; font-size: 0.85rem;" onclick="window.print()">🖨️ Print Statement</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Reference ID</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Amount (₹)</th>
+                <th>Balance After</th>
+              </tr>
+            </thead>
+            <tbody id="user-tx-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deposit Section (Wide 2-Column with Quick Select Chips) -->
+    <div id="user-deposit" class="hidden">
+      <div class="card-inner" style="margin-top: 0;">
+        <h3>📥 Deposit Funds</h3>
+        <form id="deposit-form">
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Amount to Deposit (₹)</label>
+              <input type="number" id="deposit-amount" min="1" step="100" value="500" required>
+            </div>
+            <div class="quick-chips">
+              <label>Quick Amount Selection</label>
+              <div class="chip-group">
+                <button type="button" class="btn-chip" onclick="setDepositAmount(500)">+₹500</button>
+                <button type="button" class="btn-chip" onclick="setDepositAmount(1000)">+₹1,000</button>
+                <button type="button" class="btn-chip" onclick="setDepositAmount(2000)">+₹2,000</button>
+                <button type="button" class="btn-chip" onclick="setDepositAmount(5000)">+₹5,000</button>
+                <button type="button" class="btn-chip" onclick="setDepositAmount(10000)">+₹10,000</button>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success" style="max-width: 240px; margin-top: 0.5rem;">Confirm Deposit</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Withdraw Section (Wide 2-Column with Quick Select Chips) -->
+    <div id="user-withdraw" class="hidden">
+      <div class="card-inner" style="margin-top: 0;">
+        <h3>📤 Fast Cash & ATM Withdrawal</h3>
+        <form id="withdraw-form">
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Amount to Withdraw (₹)</label>
+              <input type="number" id="withdraw-amount" min="1" step="100" value="500" required>
+            </div>
+            <div class="quick-chips">
+              <label>Quick Amount Selection</label>
+              <div class="chip-group">
+                <button type="button" class="btn-chip" onclick="setWithdrawAmount(500)">₹500</button>
+                <button type="button" class="btn-chip" onclick="setWithdrawAmount(1000)">₹1,000</button>
+                <button type="button" class="btn-chip" onclick="setWithdrawAmount(2000)">₹2,000</button>
+                <button type="button" class="btn-chip" onclick="setWithdrawAmount(5000)">₹5,000</button>
+                <button type="button" class="btn-chip" onclick="setWithdrawAmount(10000)">₹10,000</button>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-warning" style="max-width: 240px; margin-top: 0.5rem;">Confirm Withdrawal</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- PIN Reset Section (Wide 3-Column Grid) -->
+    <div id="user-pin" class="hidden">
+      <div class="card-inner" style="margin-top: 0;">
+        <h3>🔐 Security Credentials & PIN Management</h3>
+        <form id="reset-pin-form">
+          <div class="grid-3">
+            <div class="form-group">
+              <label>Current 4-Digit PIN</label>
+              <input type="password" id="reset-current" maxlength="4" placeholder="••••" required>
+            </div>
+            <div class="form-group">
+              <label>New 4-Digit PIN</label>
+              <input type="password" id="reset-new" maxlength="4" placeholder="••••" required>
+            </div>
+            <div class="form-group">
+              <label>Confirm New PIN</label>
+              <input type="password" id="reset-confirm" maxlength="4" placeholder="••••" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-danger" style="max-width: 240px; margin-top: 0.5rem;">Update PIN</button>
+        </form>
+      </div>
+    </div>
+  <!-- ANIMATED BACKGROUND FOR LOGIN & PORTAL -->
+  <div id="login-bg-container" class="login-bg-container">
+    <canvas id="login-particles-canvas"></canvas>
+    <div class="aurora-orb orb-1"></div>
+    <div class="aurora-orb orb-2"></div>
+    <div class="aurora-orb orb-3"></div>
+    <div class="cyber-grid"></div>
+    <div class="ambient-vignette"></div>
+  </div>
+
+  <script>
+    // State
+    let currentUser = null; // { role: 'admin' } or { role: 'user', account_no: '...', name: '...' }
+
+    // Utility: Show alerts
+    function showAlert(message, isError = false) {
+      const container = document.getElementById('alert-container');
+      const alert = document.createElement('div');
+      alert.className = `alert ${isError ? 'alert-error' : 'alert-success'}`;
+      alert.innerText = message;
+      container.appendChild(alert);
+      setTimeout(() => alert.remove(), 4000);
+    }
+
+    // Utility: API calls
+    async function apiCall(endpoint, method = 'GET', data = null) {
+      const options = {
+        method,
+        headers: { 'Content-Type': 'application/json' }
+      };
+      if (data) options.body = JSON.stringify(data);
+      
+      try {
+        const response = await fetch(endpoint, options);
+        const result = await response.json();
+        if (!response.ok) {
+          let errorMessage = 'An error occurred';
+          if (typeof result.detail === 'string') {
+            errorMessage = result.detail;
+          } else if (Array.isArray(result.detail)) {
+            errorMessage = result.detail.map(d => d.msg || JSON.stringify(d)).join(', ');
+          } else if (result.detail) {
+            errorMessage = JSON.stringify(result.detail);
+          }
+          throw new Error(errorMessage);
+        }
+        return result;
+      } catch (err) {
+        showAlert(err.message, true);
+        throw err;
+      }
+    }
+
+    // View Management
+    function switchView(viewId) {
+      ['login-view', 'admin-view', 'user-view'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+      const target = document.getElementById(viewId);
+      if (target) target.classList.remove('hidden');
+
+      const topBar = document.getElementById('login-top-bar');
+      const bgContainer = document.getElementById('login-bg-container');
+      if (viewId === 'login-view') {
+        if (topBar) topBar.classList.remove('hidden');
+        if (bgContainer) bgContainer.classList.remove('dashboard-mode');
+        if (window.setParticleAnimationState) window.setParticleAnimationState(true);
+      } else {
+        if (topBar) topBar.classList.add('hidden');
+        if (bgContainer) bgContainer.classList.add('dashboard-mode');
+        if (window.setParticleAnimationState) window.setParticleAnimationState(false);
+      }
+    }
+
+    function showAdminSection(sectionId) {
+      ['admin-overview', 'admin-create', 'admin-manage', 'admin-audit'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+      const target = document.getElementById(sectionId);
+      if (target) target.classList.remove('hidden');
+      
+      // Update button styles
+      const btns = document.getElementById('admin-view').querySelectorAll('.nav-buttons .btn');
+      btns.forEach(b => b.classList.add('btn-secondary'));
+      if (window.event && window.event.target && window.event.target.classList.contains('btn')) {
+        window.event.target.classList.remove('btn-secondary');
+      }
+
+      if (sectionId === 'admin-overview') loadAdminDashboard();
+      if (sectionId === 'admin-manage') loadAllAccounts();
+      if (sectionId === 'admin-audit') loadAdminTransactions();
+    }
+
+    function showUserSection(sectionId) {
+      ['user-overview', 'user-deposit', 'user-withdraw', 'user-statement', 'user-pin'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+      const target = document.getElementById(sectionId);
+      if (target) target.classList.remove('hidden');
+
+      // Update button styles
+      const btns = document.getElementById('user-view').querySelectorAll('.nav-buttons .btn');
+      btns.forEach(b => b.classList.add('btn-secondary'));
+      if (window.event && window.event.target && window.event.target.classList.contains('btn')) {
+        window.event.target.classList.remove('btn-secondary');
+      }
+
+      if (sectionId === 'user-statement' || sectionId === 'user-overview') {
+        loadUserTransactions();
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      switchView('login-view');
+      document.getElementById('user-login-form').reset();
+      const adminForm = document.getElementById('admin-login-form');
+      if (adminForm) adminForm.reset();
+      closeAdminModal();
+    }
+
+    // Dedicated Executive Admin Modal Controllers
+    const adminModal = document.getElementById('admin-login-modal');
+    const btnTopAdmin = document.getElementById('btn-top-admin-login');
+    const btnCloseAdminModal = document.getElementById('btn-close-admin-modal');
+
+    function openAdminModal() {
+      if (!adminModal) return;
+      adminModal.classList.remove('hidden');
+      const adminInput = document.getElementById('login-admin-id');
+      if (adminInput) setTimeout(() => adminInput.focus(), 150);
+    }
+
+    function closeAdminModal() {
+      if (!adminModal) return;
+      adminModal.classList.add('hidden');
+    }
+
+    if (btnTopAdmin) {
+      btnTopAdmin.addEventListener('click', openAdminModal);
+    }
+
+    if (btnCloseAdminModal) {
+      btnCloseAdminModal.addEventListener('click', closeAdminModal);
+    }
+
+    if (adminModal) {
+      adminModal.addEventListener('click', (e) => {
+        if (e.target.classList.contains('admin-modal-backdrop')) {
+          closeAdminModal();
+        }
+      });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && adminModal && !adminModal.classList.contains('hidden')) {
+        closeAdminModal();
+      }
+    });
+
+    // Password / PIN Visibility Toggle
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerText = '🙈';
+        btn.title = 'Hide';
+      } else {
+        input.type = 'password';
+        btn.innerText = '👁️';
+        btn.title = 'Show';
+      }
+    }
+
+    // Quick-Fill Demo Credentials
+    function quickFill(role, idVal, passVal) {
+      if (role === 'user') {
+        const accInput = document.getElementById('login-account-no');
+        const pinInput = document.getElementById('login-pin');
+        accInput.value = idVal;
+        pinInput.value = passVal;
+        accInput.classList.add('input-flash');
+        pinInput.classList.add('input-flash');
+        setTimeout(() => {
+          accInput.classList.remove('input-flash');
+          pinInput.classList.remove('input-flash');
+        }, 800);
+      } else if (role === 'admin') {
+        openAdminModal();
+        const adminInput = document.getElementById('login-admin-id');
+        const passInput = document.getElementById('login-admin-pass');
+        adminInput.value = idVal;
+        passInput.value = passVal;
+        adminInput.classList.add('input-flash');
+        passInput.classList.add('input-flash');
+        setTimeout(() => {
+          adminInput.classList.remove('input-flash');
+          passInput.classList.remove('input-flash');
+        }, 800);
+      }
+    }
+
+    // Live UTC Clock
+    function updateLiveClock() {
+      const clockEl = document.getElementById('live-clock');
+      if (!clockEl) return;
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+      clockEl.innerText = `${timeStr} UTC`;
+    }
+    setInterval(updateLiveClock, 1000);
+    updateLiveClock();
+
+    // Login Submission
+    document.getElementById('user-login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const account_no = document.getElementById('login-account-no').value;
+      const pin = document.getElementById('login-pin').value;
+      try {
+        const res = await apiCall('/api/login/user', 'POST', { account_no, pin });
+        currentUser = res;
+        switchView('user-view');
+        document.getElementById('user-greeting').innerText = `Welcome, ${res.name}`;
+        document.getElementById('user-acc-no-display').innerText = res.account_no;
+        loadUserDashboard();
+      } catch (e) {}
+    });
+
+    document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const admin_id = document.getElementById('login-admin-id').value;
+      const admin_password = document.getElementById('login-admin-pass').value;
+      try {
+        const res = await apiCall('/api/login/admin', 'POST', { admin_id, admin_password });
+        currentUser = res;
+        closeAdminModal();
+        switchView('admin-view');
+        loadAdminDashboard();
+      } catch (e) {}
+    });
+
+    // Admin Actions
+    async function loadAdminDashboard() {
+      try {
+        const data = await apiCall('/api/admin/dashboard');
+        document.getElementById('stat-total-accounts').innerText = data.total_accounts;
+        document.getElementById('stat-total-balance').innerText = `₹${data.total_balance.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        const avg = data.total_accounts > 0 ? (data.total_balance / data.total_accounts) : 0;
+        const avgEl = document.getElementById('stat-avg-balance');
+        if (avgEl) avgEl.innerText = `₹${avg.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+      } catch (e) {}
+    }
+
+    document.getElementById('create-account-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('create-name').value;
+      const pin = document.getElementById('create-pin').value;
+      const initial_amount = parseFloat(document.getElementById('create-amount').value);
+      
+      try {
+        const res = await apiCall('/api/admin/accounts', 'POST', { name, pin, initial_amount });
+        showAlert(`Account created successfully! Account No: ${res.account_no}`);
+        e.target.reset();
+        loadAdminDashboard();
+      } catch (e) {}
+    });
+
+    let allAccountsCache = [];
+
+    async function loadAllAccounts() {
+      try {
+        const data = await apiCall('/api/admin/accounts');
+        allAccountsCache = data.accounts || [];
+        renderAccountsTable(allAccountsCache);
+      } catch (e) {}
+    }
+
+    function filterAccounts() {
+      const searchInput = document.getElementById('search-accounts');
+      const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+      if (!query) {
+        renderAccountsTable(allAccountsCache);
+        return;
+      }
+      const filtered = allAccountsCache.filter(acc => 
+        String(acc.account_no).toLowerCase().includes(query) ||
+        String(acc.name).toLowerCase().includes(query)
+      );
+      renderAccountsTable(filtered);
+    }
+
+    function renderAccountsTable(accounts) {
+      const tbody = document.getElementById('accounts-table-body');
+      tbody.innerHTML = '';
+      if (accounts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">No customer accounts found matching criteria.</td></tr>';
+        return;
+      }
+      accounts.forEach(acc => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>#${acc.account_no}</td>
+          <td><strong>${acc.name}</strong></td>
+          <td>₹${parseFloat(acc.balance).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+          <td><span class="badge ${acc.pin_set ? 'badge-success' : 'badge-warning'}">${acc.pin_set ? 'Active' : 'Unset'}</span></td>
+          <td style="text-align: right;">
+            <button class="btn btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.85rem; width: auto;" onclick='openEditModal(${JSON.stringify(acc)})'>✏️ Edit</button>
+            <button class="btn btn-danger" style="padding: 0.35rem 0.75rem; font-size: 0.85rem; width: auto; margin-left: 0.35rem;" onclick="deleteAccount('${acc.account_no}')">🗑️ Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function setDepositAmount(val) {
+      document.getElementById('deposit-amount').value = val;
+    }
+
+    function setWithdrawAmount(val) {
+      document.getElementById('withdraw-amount').value = val;
+    }
+
+    // Modal logic
+    function openEditModal(acc) {
+      document.getElementById('edit-acc-no').value = acc.account_no;
+      document.getElementById('edit-name').value = acc.name;
+      document.getElementById('edit-balance').value = parseFloat(acc.balance);
+      document.getElementById('edit-pin-action').value = 'Keep current PIN';
+      toggleEditPinInput();
+      document.getElementById('edit-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('edit-modal').classList.add('hidden');
+    }
+
+    function toggleEditPinInput() {
+      const action = document.getElementById('edit-pin-action').value;
+      const group = document.getElementById('edit-pin-group');
+      if (action === 'Set new 4-digit PIN directly') {
+        group.classList.remove('hidden');
+        document.getElementById('edit-pin').required = true;
+      } else {
+        group.classList.add('hidden');
+        document.getElementById('edit-pin').required = false;
+        document.getElementById('edit-pin').value = '';
+      }
+    }
+
+    document.getElementById('edit-account-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const account_no = document.getElementById('edit-acc-no').value;
+      const payload = {
+        name: document.getElementById('edit-name').value,
+        balance: parseFloat(document.getElementById('edit-balance').value),
+        pin_action: document.getElementById('edit-pin-action').value,
+        new_pin: document.getElementById('edit-pin').value || null
+      };
+      
+      try {
+        await apiCall(`/api/admin/accounts/${account_no}`, 'PUT', payload);
+        showAlert('Account updated successfully');
+        closeModal();
+        loadAllAccounts();
+      } catch (e) {}
+    });
+
+    async function deleteAccount(account_no) {
+      if(confirm(`Are you sure you want to delete account ${account_no}?`)) {
+        try {
+          await apiCall(`/api/admin/accounts/${account_no}`, 'DELETE');
+          showAlert('Account deleted successfully');
+          loadAllAccounts();
+        } catch (e) {}
+      }
+    }
+
+    // User Actions & Transactions
+    async function loadUserDashboard() {
+      if (!currentUser) return;
+      try {
+        const data = await apiCall(`/api/user/account/${currentUser.account_no}`);
+        const bal = parseFloat(data.account.balance).toLocaleString(undefined, {minimumFractionDigits: 2});
+        const balEl = document.getElementById('user-balance');
+        if (balEl) balEl.innerText = `₹${bal}`;
+        
+        const cardHolderEl = document.getElementById('card-holder-display');
+        if (cardHolderEl) cardHolderEl.innerText = (currentUser.name || data.account.name || 'CUSTOMER').toUpperCase();
+        
+        const cardAccEl = document.getElementById('card-acc-display');
+        if (cardAccEl) cardAccEl.innerText = `4532 •••• •••• ${String(currentUser.account_no).padStart(4, '0')}`;
+
+        const accDisplay = document.getElementById('user-acc-no-display');
+        if (accDisplay) accDisplay.innerText = `#${currentUser.account_no}`;
+
+        loadUserTransactions();
+      } catch (e) {}
+    }
+
+    async function loadUserTransactions() {
+      if (!currentUser || !currentUser.account_no) return;
+      try {
+        const data = await apiCall(`/api/user/transactions/${currentUser.account_no}`);
+        renderUserTransactions(data.transactions || []);
+      } catch (e) {}
+    }
+
+    function renderUserTransactions(txs) {
+      const tbody = document.getElementById('user-tx-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      if (txs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">No transaction activity recorded yet. Make a deposit to see your passbook entries.</td></tr>';
+        return;
+      }
+      txs.forEach(t => {
+        const isDeposit = t.type === 'DEPOSIT' || t.type === 'OPENING_DEPOSIT';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-size: 0.825rem; color: var(--text-muted);">${t.created_at}</td>
+          <td><code>#TXN-${String(t.id).padStart(5, '0')}</code></td>
+          <td><span class="badge ${isDeposit ? 'badge-success' : 'badge-warning'}">${t.type}</span></td>
+          <td>${t.description || (isDeposit ? 'Deposit' : 'Withdrawal')}</td>
+          <td class="${isDeposit ? 'tx-amount-plus' : 'tx-amount-minus'}">
+            ${isDeposit ? '+' : '-'}₹${parseFloat(t.amount).toLocaleString(undefined, {minimumFractionDigits: 2})}
+          </td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-weight: 600;">
+            ₹${parseFloat(t.balance_after).toLocaleString(undefined, {minimumFractionDigits: 2})}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function loadAdminTransactions() {
+      try {
+        const data = await apiCall('/api/admin/transactions');
+        const tbody = document.getElementById('admin-audit-table-body');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        const txs = data.transactions || [];
+        if (txs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">No global transactions logged yet.</td></tr>';
+          return;
+        }
+        txs.forEach(t => {
+          const isDeposit = t.type === 'DEPOSIT' || t.type === 'OPENING_DEPOSIT';
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td style="font-size: 0.825rem; color: var(--text-muted);">${t.created_at}</td>
+            <td><code>#TXN-${String(t.id).padStart(5, '0')}</code></td>
+            <td><strong>#${t.account_no}</strong></td>
+            <td><span class="badge ${isDeposit ? 'badge-success' : 'badge-warning'}">${t.type}</span></td>
+            <td class="${isDeposit ? 'tx-amount-plus' : 'tx-amount-minus'}">
+              ${isDeposit ? '+' : '-'}₹${parseFloat(t.amount).toLocaleString(undefined, {minimumFractionDigits: 2})}
+            </td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-weight: 600;">
+              ₹${parseFloat(t.balance_after).toLocaleString(undefined, {minimumFractionDigits: 2})}
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (e) {}
+    }
+
+    document.getElementById('deposit-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const amount = parseFloat(document.getElementById('deposit-amount').value);
+      try {
+        const res = await apiCall('/api/user/deposit', 'POST', { account_no: currentUser.account_no, amount });
+        showAlert(res.message);
+        e.target.reset();
+        document.getElementById('deposit-amount').value = 500;
+        loadUserDashboard();
+      } catch (e) {}
+    });
+
+    document.getElementById('withdraw-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const amount = parseFloat(document.getElementById('withdraw-amount').value);
+      try {
+        const res = await apiCall('/api/user/withdraw', 'POST', { account_no: currentUser.account_no, amount });
+        showAlert(res.message);
+        e.target.reset();
+        document.getElementById('withdraw-amount').value = 500;
+        loadUserDashboard();
+      } catch (e) {}
+    });
+
+    document.getElementById('reset-pin-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        account_no: currentUser.account_no,
+        current_pin: document.getElementById('reset-current').value,
+        new_pin: document.getElementById('reset-new').value,
+        confirm_pin: document.getElementById('reset-confirm').value
+      };
+      try {
+        const res = await apiCall('/api/user/reset_pin', 'PUT', payload);
+        showAlert(res.message);
+        e.target.reset();
+      } catch (e) {}
+    });
+
+    // High-Performance Interactive Constellation Canvas Engine
+    (function initParticleSystem() {
+      const canvas = document.getElementById('login-particles-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let animationFrameId = null;
+      let isRunning = true;
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const mouse = { x: -1000, y: -1000, radius: 130 };
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+      window.addEventListener('mouseleave', () => {
+        mouse.x = -1000;
+        mouse.y = -1000;
+      });
+
+      const particleCount = Math.min(Math.max(Math.floor((window.innerWidth * window.innerHeight) / 16000), 45), 90);
+      const particles = [];
+
+      class Particle {
+        constructor() {
+          this.reset(true);
+        }
+        reset(randomize = false) {
+          this.x = randomize ? Math.random() * canvas.width : (Math.random() > 0.5 ? 0 : canvas.width);
+          this.y = randomize ? Math.random() * canvas.height : Math.random() * canvas.height;
+          this.vx = (Math.random() - 0.5) * 0.7;
+          this.vy = (Math.random() - 0.5) * 0.7;
+          this.radius = Math.random() * 2.2 + 0.8;
+          const r = Math.random();
+          if (r > 0.6) {
+            this.color = '99, 102, 241'; // Indigo
+          } else if (r > 0.3) {
+            this.color = '6, 182, 212';  // Cyan
+          } else {
+            this.color = '16, 185, 129'; // Emerald
+          }
+          this.alpha = Math.random() * 0.45 + 0.35;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+
+          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+          // Gentle mouse repulsion
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            const angle = Math.atan2(dy, dx);
+            this.x -= Math.cos(angle) * force * 2.5;
+            this.y -= Math.sin(angle) * force * 2.5;
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = `rgba(${this.color}, 0.8)`;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+
+      function render() {
+        if (!isRunning) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Interconnecting lines
+        const maxDist = 135;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < maxDist) {
+              const lineAlpha = (1 - dist / maxDist) * 0.22;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(99, 102, 241, ${lineAlpha})`;
+              ctx.lineWidth = 0.9;
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Particle updates
+        for (let p of particles) {
+          p.update();
+          p.draw();
+        }
+
+        animationFrameId = requestAnimationFrame(render);
+      }
+
+      render();
+
+      window.setParticleAnimationState = function(active) {
+        if (active && !isRunning) {
+          isRunning = true;
+          render();
+        } else if (!active && isRunning) {
+          isRunning = false;
+          if (animationFrameId) cancelAnimationFrame(animationFrameId);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      };
+    })();
+  </script>
+</body>
+</html>
